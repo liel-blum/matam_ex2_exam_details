@@ -1,47 +1,29 @@
 #include <iostream>
-
+#include "examDetails.h"
 using std::string;
 using std::ostream;
 using std::cout;
 using std::endl;
 
-
-class ExamDetails{
-private:
-    int course_number, duration, month, day;
-    double hour;
-    string link_to_test;
-public:
-    ExamDetails(int course_number, int month, int day, double hour, int duration, string link_to_test);
-    ~ExamDetails() = default;
-    ExamDetails(const ExamDetails& exam_details);
-    string getLink() const;
-    void setLink(const string new_link_to_test);
-    int operator-(ExamDetails& exam_details_right) const;
-    bool operator<(ExamDetails& exam_details_right) const;
-    friend ostream& operator<<(ostream& os,const ExamDetails& exam_details);
-    static ExamDetails makeMatamExam() ;
-};
-
-ExamDetails:: ExamDetails(int course_number, int month, int day, double hour, int duration, string link_to_test=""){
+ExamDetails:: ExamDetails(int course_number, int month, int day, double hour, int duration,const string& link_to_test=""){
     this->course_number = course_number;
     this->duration = duration;
     this->month=month;
     this->day = day;
     this->hour = hour;
-    this->link_to_test = link_to_test; //todo: check if need to allocate space for this
+    this->link_to_test = string(link_to_test); //todo: check if need to allocate space for this
 }
 
 ExamDetails::ExamDetails(const ExamDetails& exam_details):
         course_number(exam_details.course_number),
-        duration(exam_details.duration),
-        day(exam_details.day),hour(exam_details.hour),link_to_test(exam_details.link_to_test){
+        duration(exam_details.duration),month(exam_details.month),
+        day(exam_details.day),hour(exam_details.hour),link_to_test(string(exam_details.link_to_test)){
 }
 string ExamDetails::getLink() const{
     return this->link_to_test;
 }
-void ExamDetails::setLink(const string new_link_to_test){
-    this->link_to_test=new_link_to_test;
+void ExamDetails::setLink(const string& new_link_to_test){
+    this->link_to_test=string(new_link_to_test);
 }
 
 int ExamDetails::operator-(ExamDetails& exam_details_right) const{
@@ -70,6 +52,7 @@ ostream& operator<<(ostream& os,const ExamDetails& exam_details) {
 ExamDetails ExamDetails::makeMatamExam() {
     return ExamDetails(234124,7,28,13,3,"https://tinyurl.com/59hzps6m");
 }
+/*
 
 int main()
 {
@@ -79,4 +62,6 @@ int main()
     cout << "the difference between MATAM and infi 2m is " << (exam1-exam2) << " days \n";
     ExamDetails& closest = (exam1 < exam2) ? exam1 : exam2;
     cout << "your closest exam is:" << endl << closest << endl;
-}
+    cout <<"link exam 1 : " <<exam1.getLink() << endl ;
+
+}*/
