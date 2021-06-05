@@ -62,33 +62,33 @@ int main()
     lst1.insert("Alice");
     lst1.insert("Donald");
 
-    printList(lst1);
-
-    TEST("1.6")
-    SortedList<ExamDetails> lst2;
-    lst2.insert(exam1);
-    lst2.insert(exam2);
-
-    printList(lst2);
-
-    TEST("1.7")
-    SortedList<string> lst3 = lst1;
-    printList(lst3);
-
-    TEST("1.8")
-    lst3 = lst3.apply(getLen);
-    printList(lst3);
-
-
-    TEST("1.9")
-    lst3.remove(lst3.begin());
-    printList(lst3);
-
-    TEST("1.10")
-    SortedList<ExamDetails> lst4 = lst2.filter(isTrollLink);
-    printList(lst2);
-    cout << "----------" << endl;
-    printList(lst4);
+//    printList(lst1);
+//
+//    TEST("1.6")
+//    SortedList<ExamDetails> lst2;
+//    lst2.insert(exam1);
+//    lst2.insert(exam2);
+//
+//    printList(lst2);
+//
+//    TEST("1.7")
+//    SortedList<string> lst3 = lst1;
+//    printList(lst3);
+//
+//    TEST("1.8")
+//    lst3 = lst3.apply(getLen);
+//    printList(lst3);
+//
+//
+//    TEST("1.9")
+//    lst3.remove(lst3.begin());
+//    printList(lst3);
+//
+//    TEST("1.10")
+//    SortedList<ExamDetails> lst4 = lst2.filter(isTrollLink);
+//    printList(lst2);
+//    cout << "----------" << endl;
+//    printList(lst4);
 
     return 0;
 }
