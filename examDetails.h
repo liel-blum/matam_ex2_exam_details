@@ -17,6 +17,7 @@ namespace mtm {
         static const int min_month = 1;
     public:
         ExamDetails(int course_number, int month, int day, double hour, int duration, const string &link_to_test="");
+        ExamDetails() = default ;
 
         ~ExamDetails() = default;
 
@@ -29,6 +30,8 @@ namespace mtm {
         int operator-(ExamDetails &exam_details_right) const;
 
         bool operator<(ExamDetails &exam_details_right) const;
+
+        bool operator>(ExamDetails &exam_details_right) const;
 
         friend ostream &operator<<(ostream &os, const ExamDetails &exam_details);
 

@@ -44,6 +44,9 @@ namespace mtm {
     bool ExamDetails::operator<(ExamDetails &exam_details_right) const {
         return (this->operator-(exam_details_right)) < 0;
     }
+    bool ExamDetails::operator>(ExamDetails &exam_details_right) const {
+        return !(this->operator<(exam_details_right));
+    }
 
     ostream &operator<<(ostream &os, const ExamDetails &exam_details) {
         int hour = int(exam_details.hour);
@@ -53,26 +56,15 @@ namespace mtm {
         } else {
             minutes = "30";
         }
-        return os << "Course Number:" << exam_details.course_number << '\n'
+        return os << "Course Number: " << exam_details.course_number << endl
                   << "Time: " << exam_details.day << "." << exam_details.month << " at "
-                  << hour << ":" << minutes << '\n' << "Duration:" << exam_details.duration << ":"
-                  << "00" << '\n' << "Zoom Link:" << exam_details.link_to_test;
+                  << hour << ":" << minutes << endl << "Duration: " << exam_details.duration << ":"
+                  << "00" << endl << "Zoom Link: " << exam_details.link_to_test<< endl;
     }
 
     ExamDetails ExamDetails::makeMatamExam() {
         return ExamDetails(234124, 7, 28, 13, 3, "https://tinyurl.com/59hzps6m");
     }
 }
-/*
 
-int main()
-{
-    ExamDetails exam1 = ExamDetails::makeMatamExam();
-    ExamDetails exam2(104032, 7, 11, 9.5, 3);
-    ExamDetails exam3 = exam1;
-    cout << "the difference between MATAM and infi 2m is " << (exam1-exam2) << " days \n";
-    ExamDetails& closest = (exam1 < exam2) ? exam1 : exam2;
-    cout << "your closest exam is:" << endl << closest << endl;
-    cout <<"link exam 1 : " <<exam1.getLink() << endl ;
 
-}*/
