@@ -24,9 +24,9 @@ namespace mtm {
     }
 
     ExamDetails::ExamDetails(const ExamDetails &exam_details) :
-            course_number(exam_details.course_number),
-            duration(exam_details.duration), month(exam_details.month),
-            day(exam_details.day), hour(exam_details.hour), link_to_test(string(exam_details.link_to_test)) {
+            course_number(exam_details.course_number), month(exam_details.month),
+            day(exam_details.day),duration(exam_details.duration),
+             hour(exam_details.hour), link_to_test(string(exam_details.link_to_test)) {
     }
 
     string ExamDetails::getLink() const {

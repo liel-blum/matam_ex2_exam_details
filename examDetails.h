@@ -8,7 +8,10 @@ using std::ostream;
 namespace mtm {
     class ExamDetails {
     private:
-        int course_number, month, day, duration;
+        int course_number;
+        int month;
+        int day;
+        int duration;
         double hour;
         string link_to_test;
         static const int max_day_of_month = 30;
