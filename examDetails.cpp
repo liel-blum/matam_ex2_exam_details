@@ -8,9 +8,9 @@ using std::endl;
 using namespace mtm;
 
 namespace mtm {
-    ExamDetails::ExamDetails(int course_number, int month, int day, double hour, int duration, const string &link_to_test)
-    :course_number(course_number), month(month), day(day),duration(duration), hour(hour),
-                         link_to_test(link_to_test) {
+    ExamDetails::ExamDetails(int course_number, int month, int day, int duration, double hour, const string
+    &link_to_test)
+    :course_number(course_number), month(month), day(day),duration(duration), hour(hour),link_to_test(link_to_test) {
         if (this->month < min_month || this->month > max_month || this->day < min_day_of_month ||
             this->day > max_day_of_month) {
             throw InvalidDateException(day, month);
