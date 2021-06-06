@@ -62,6 +62,7 @@ int main()
     lst1.insert("Alice");
     lst1.insert("Donald");
 
+
     printList(lst1);
 
     TEST("1.6")
@@ -79,7 +80,6 @@ int main()
     lst3 = lst3.apply(getLen);
     printList(lst3);
 
-
     TEST("1.9")
     lst3.remove(lst3.begin());
     printList(lst3);
@@ -89,6 +89,7 @@ int main()
     printList(lst2);
     cout << "----------" << endl;
     printList(lst4);
+
 
     return 0;
 }
