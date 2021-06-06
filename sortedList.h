@@ -185,6 +185,7 @@ namespace mtm {
         }
         clearList();
         copyList(sorted_list_to_assign);
+        return *this;
     }
     template <class T>
     SortedList<T>::~SortedList(){
