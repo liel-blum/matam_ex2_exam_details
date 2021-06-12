@@ -14,12 +14,9 @@ namespace mtm {
         int duration;
         double hour;
         string link_to_test;
-        static const int max_day_of_month = 30;
-        static const int min_day_of_month = 1;
-        static const int max_month = 12;
-        static const int min_month = 1;
+
     public:
-        ExamDetails(int course_number, int month, int day, int duration, double hour, const string &link_to_test="");
+        ExamDetails(int course_number, int month, int day, double hour, int duration, const string &link_to_test="");
         ExamDetails() = default ;
 
         ~ExamDetails() = default;

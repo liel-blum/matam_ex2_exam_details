@@ -184,7 +184,12 @@ namespace mtm {
         }
         SortedList<T>* temp_list = new SortedList<T>;
         temp_list->size = sorted_list_to_assign.size;
-        copyList(*temp_list, sorted_list_to_assign); //todo: should we check for allocation failure here??
+        try{
+            copyList(*temp_list, sorted_list_to_assign); //todo: should we check for allocation failure here??
+        }
+        catch (...){
+            delete temp_list;
+        }
         clearList();
         this->head = temp_list->head;
         this->size = temp_list->size;

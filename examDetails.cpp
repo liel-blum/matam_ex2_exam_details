@@ -1,21 +1,30 @@
 #include <iostream>
+#include <math.h>
 #include "examDetails.h"
 using std::string;
 using std::ostream;
 using std::cout;
 using std::endl;
+using std::modf;
 
-using namespace mtm;
+const int MAX_DAY_OF_MONTH = 30;
+const int MIN_DAY_OF_MONTH = 1;
+const int MAX_MONTH = 12;
+const int MIN_MONTH = 1;
+const double MIN_HOUR = 0;
+const double MAX_HOUR = 23;
 
 namespace mtm {
-    ExamDetails::ExamDetails(int course_number, int month, int day, int duration, double hour, const string
+    ExamDetails::ExamDetails(int course_number, int month, int day, double hour, int duration, const string
     &link_to_test)
-    :course_number(course_number), month(month), day(day),duration(duration), hour(hour),link_to_test(link_to_test) {
-        if (this->month < min_month || this->month > max_month || this->day < min_day_of_month ||
-            this->day > max_day_of_month) {
+    :course_number(course_number), month(month), day(day),hour(hour), duration(duration),link_to_test(link_to_test) {
+        if (this->month < MIN_MONTH || this->month > MAX_MONTH || this->day < MIN_DAY_OF_MONTH ||
+            this->day > MAX_DAY_OF_MONTH) {
             throw InvalidDateException(day, month);
         }
-        if (this->hour - int(this->hour) != 0.5 && this->hour - int(this->hour) != 0) {
+        double whole_hour;
+        double minutes = modf(hour, &whole_hour);
+        if ((minutes!= 0.5 && minutes != 0) || whole_hour>MAX_HOUR || whole_hour<MIN_HOUR) {
             throw InvalidTimeException(hour);
         }
         if (course_number < 0) {
@@ -25,8 +34,8 @@ namespace mtm {
 
     ExamDetails::ExamDetails(const ExamDetails &exam_details) :
             course_number(exam_details.course_number), month(exam_details.month),
-            day(exam_details.day),duration(exam_details.duration),
-             hour(exam_details.hour), link_to_test(string(exam_details.link_to_test)) {
+            day(exam_details.day),hour(exam_details.hour), duration(exam_details.duration),
+              link_to_test(string(exam_details.link_to_test)) {
     }
 
     string ExamDetails::getLink() const {
