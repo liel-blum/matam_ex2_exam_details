@@ -22,7 +22,7 @@ namespace mtm {
         Node* head;
         int size;
         void clearList();
-        void copyList(const SortedList<T>& sorted_list_to_copy);
+        static void copyList(SortedList<T>& sorted_list_dest, const SortedList<T>& sorted_list_to_copy);
         void insertNodeAtEnd(Node* last_node, Node* new_node);
         void insertNodeAtStart(Node* new_node);
         Node* getNodeByIndex (int index);
@@ -135,7 +135,7 @@ namespace mtm {
     {}
     template <class T>
     SortedList<T>::SortedList(const SortedList<T>& sorted_list_to_copy):size(sorted_list_to_copy.size){
-        copyList(sorted_list_to_copy);
+        copyList(*this, sorted_list_to_copy);
     }
 
     template <class T>
@@ -159,18 +159,17 @@ namespace mtm {
     }
 
     template <class T>
-    void SortedList<T>::copyList(const SortedList<T>& sorted_list_to_copy) {
+    void SortedList<T>::copyList(SortedList<T>& sorted_list_dest, const SortedList<T>& sorted_list_to_copy) {
         if(!sorted_list_to_copy.head){
             return;
         }
         Node* head_ptr_to_copy = sorted_list_to_copy.head;
-        this->head=new Node;
-        this->head->data=head_ptr_to_copy->data;
-        Node* current = this->head;
+        sorted_list_dest.head=new Node;
+        sorted_list_dest.head->data=head_ptr_to_copy->data;
+        Node* current =  sorted_list_dest.head;
         head_ptr_to_copy=head_ptr_to_copy->next_node;
         while(head_ptr_to_copy)
         {
-            //todo: should we check for allocation failures
             current->next_node=new Node;
             current=current->next_node;
             current->data= head_ptr_to_copy->data;
@@ -183,8 +182,12 @@ namespace mtm {
         if(this == &sorted_list_to_assign){
             return *this;
         }
+        SortedList<T>* temp_list = new SortedList<T>;
+        temp_list->size = sorted_list_to_assign.size;
+        copyList(*temp_list, sorted_list_to_assign); //todo: should we check for allocation failure here??
         clearList();
-        copyList(sorted_list_to_assign);
+        this->head = temp_list->head;
+        this->size = temp_list->size;
         return *this;
     }
     template <class T>
