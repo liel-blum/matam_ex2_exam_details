@@ -58,9 +58,10 @@ namespace mtm {
     }
 
     ostream &operator<<(ostream &os, const ExamDetails &exam_details) {
-        int hour = int(exam_details.hour);
+        double hour;
+        double decimal_hour = modf(exam_details.hour, &hour);
         string minutes;
-        if (0 == (exam_details.hour - hour) * 60) {
+        if (decimal_hour == 0) {
             minutes = "00";
         } else {
             minutes = "30";
