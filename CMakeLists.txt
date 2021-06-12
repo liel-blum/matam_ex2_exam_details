@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.4)
+cmake_minimum_required(VERSION 3.0)
 project(matam_ex2_exam_details)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -11,5 +11,7 @@ set(MTM_FLAGS_RELEASE "${MTM_FLAGS_DEBUG} -DNDEBUG")
 set(CMAKE_CPP_FLAGS ${MTM_FLAGS_DEBUG})
 
 
-add_executable(examDetails examDetails.cpp part_a_test.cpp)
+#add_executable(examDetails examDetails.cpp part_a_test.cpp)
 
+
+add_executable(Character part_b/Character.h part_b/Character.cpp part_b/gameTest.cpp)
