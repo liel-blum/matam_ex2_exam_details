@@ -93,14 +93,5 @@ namespace mtm {
     std::ostream &operator<<(std::ostream &os, const Game &game) {
         //todo can we use a vector and not an array here?
         std::vector<std::vector<char>> char_board(game.height, std::vector<char>(game.width, ' '));
-        for (int row = 0; row < game.height; ++row){
-            for(int column=0; column<game.width; ++column){
-                std::shared_ptr<Character> character_at_cell = game.board.at(row).at(column);
-                if(character_at_cell){
-                    char_board[row][column] = character_at_cell->getCharacterSign();
-                }
-            }
-        }
-        printGameBoard(os, &char_board[0][0], &char_board[game.width-1][game.height-1], game.width);
         }
 }

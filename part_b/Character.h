@@ -6,7 +6,8 @@
 #define CHARACTER_H
 
 #include "Auxiliaries.h"
-#include "Game.h"
+#include <vector>
+#include <memory>
 
 namespace mtm {
     class Character {
@@ -23,7 +24,7 @@ namespace mtm {
         const char power_lifters_sign;
     public:
         Character(int health, int ammo, int range, int power, Team team, int movement_range, int ammo_on_reload,
-                  int ammo_attack_cost, char cross_lifters_sign, char power_lifters_sign) : health(health), ammo(ammo),
+                  int ammo_attack_cost, char cross_fitters_sign, char power_lifters_sign) : health(health), ammo(ammo),
                                                                                           range(range),
                                                                                           power(power), team(team),
                                                                                           movement_range(

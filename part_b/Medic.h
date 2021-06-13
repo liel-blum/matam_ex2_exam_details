@@ -20,7 +20,7 @@ namespace mtm {
         Medic(int health, int ammo, int range, int power, Team team) : Character(health, ammo, range, power, team,
                                                                                  MOVEMENT_RANGE, AMMO_ON_RELOAD,
                                                                                  AMMO_ATTACK_COST,
-                                                                                 CROSS_FITTERS_SIGN,
+                                                                                 CROSSFITTERS_SIGN,
                                                                                  POWER_LIFTERS_SIGN) {
         }
 

@@ -1,7 +1,7 @@
 
 #include "Sniper.h"
-#include "Character.h"
 #include <cmath>
+
 namespace mtm{
     bool Sniper::isAttackInRange(const GridPoint & src_coordinates, const GridPoint & dst_coordinates){
         int distance = GridPoint::distance(src_coordinates,dst_coordinates);

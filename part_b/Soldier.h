@@ -2,6 +2,8 @@
 #define SOLDIER_H
 
 #include "Character.h"
+#include <vector>
+#include <memory>
 
 
 namespace mtm {
@@ -14,7 +16,8 @@ namespace mtm {
     public:
         Soldier(int health, int ammo, int range, int power, Team team) : Character(health, ammo, range, power, team,
                                                                                    MOVEMENT_RANGE, AMMO_ON_RELOAD,
-                                                                                   AMMO_ATTACK_COST) {};
+                                                                                   AMMO_ATTACK_COST,
+                                                                                   CROSSFITTERS_SIGN, POWER_LIFTERS_SIGN) {};
 
         bool isAttackInRange(const GridPoint &src_coordinates, const GridPoint &dst_coordinates) override;
 

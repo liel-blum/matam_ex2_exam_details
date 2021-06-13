@@ -1,5 +1,7 @@
 
 #include "Soldier.h"
+#include <vector>
+#include <memory>
 
 namespace mtm{
     bool Soldier::isAttackInRange(const GridPoint & src_coordinates, const GridPoint & dst_coordinates){

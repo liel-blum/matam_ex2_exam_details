@@ -16,4 +16,5 @@ set(CMAKE_CPP_FLAGS ${MTM_FLAGS_DEBUG})
 
 add_executable(Character part_b/Character.h part_b/Character.cpp part_b/gameTest.cpp part_b/Soldier.h part_b/Soldier.cpp
         part_b/Medic.h
-        part_b/Medic.cpp part_b/Sniper.cpp part_b/Sniper.h part_b/Game.cpp part_b/Game.h)
+        part_b/Medic.cpp part_b/Sniper.cpp part_b/Sniper.h part_b/Game.cpp part_b/Game.h part_b/Auxiliaries.cpp
+        part_b/Auxiliaries.h)
