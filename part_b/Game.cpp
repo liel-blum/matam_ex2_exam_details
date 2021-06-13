@@ -1,11 +1,14 @@
 
 #include "Game.h"
 #include "Exceptions.h"
+#include <iostream>
 
 
 namespace mtm {
     Game::Game(int height, int width): height(height), width(width) {
         board.resize( height , std::vector<std::shared_ptr<Character>>(width, nullptr));
+        team_players_count[CROSSFITTERS] = 0;
+        team_players_count[POWERLIFTERS]=0;
         //todo: ADD EXCEPTION HANDLING
     }
     void Game::isLegalCell(const GridPoint& coordinates){
@@ -29,6 +32,7 @@ namespace mtm {
         isLegalCell(coordinates);
         isCellOccupied(coordinates);
         board[coordinates.row][coordinates.col]=character;
+        team_players_count[character->getTeam()]++;
     }
 
      std::shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team,
@@ -75,18 +79,28 @@ namespace mtm {
     }
     //todo:consider changing the for loops
     bool Game::isOver(Team* winningTeam) const{
-        int counter_power_lifters;
-        for (int row = 0; row < height; ++row) {
-            for (int col = 0; col < width; ++col) {
-                std::shared_ptr<Character> character = board.at(row).at(col);
-                if(character){
-                    if(character->getTeam()!=previous_team){
-                        return false;
-                    }
-                    previous_team=character->getTeam();
+        int power_lifters_count =team_players_count.at(POWERLIFTERS);
+        int crossfitters_count =team_players_count.at(CROSSFITTERS);
+        if((crossfitters_count>0 && power_lifters_count>0) || (power_lifters_count==0 && crossfitters_count==0)){
+            return false;
+        }
+        if(winningTeam){
+            *winningTeam= power_lifters_count > crossfitters_count ? POWERLIFTERS: CROSSFITTERS;
+        }
+        return true;
+    }
 
+    std::ostream &operator<<(std::ostream &os, const Game &game) {
+        //todo can we use a vector and not an array here?
+        std::vector<std::vector<char>> char_board(game.height, std::vector<char>(game.width, ' '));
+        for (int row = 0; row < game.height; ++row){
+            for(int column=0; column<game.width; ++column){
+                std::shared_ptr<Character> character_at_cell = game.board.at(row).at(column);
+                if(character_at_cell){
+                    char_board[row][column] = character_at_cell->getCharacterSign();
                 }
             }
         }
-    }
+        printGameBoard(os, &char_board[0][0], &char_board[game.width-1][game.height-1], game.width);
+        }
 }

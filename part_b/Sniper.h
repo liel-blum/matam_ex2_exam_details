@@ -6,17 +6,28 @@
 #define SNIPER_H
 
 #include "Character.h"
-const int MOVEMENT_RANGE = 4;
-const int AMMO_ON_RELOAD = 2;
-const int AMMO_ATTACK_COST = 1;
-namespace mtm {
-    class Sniper: public Character{
 
+
+
+
+namespace mtm {
+    class Sniper : public Character {
+        static const int MOVEMENT_RANGE = 4;
+        static const int AMMO_ON_RELOAD = 2;
+        static const int AMMO_ATTACK_COST = 1;
+        static const char CROSSFITTERS_SIGN = 'n';
+        static const char POWER_LIFTERS_SIGN = 'N';
         int number_of_successful_hits;
     public:
-        Sniper(int health, int ammo, int range, int power, Team team): Character(health, ammo, range, power, team,MOVEMENT_RANGE,AMMO_ON_RELOAD,AMMO_ATTACK_COST), number_of_successful_hits(0) {}
-        bool isAttackInRange(const GridPoint & src_coordinates, const GridPoint & dst_coordinates) override;
-        void attack(const std::vector<std::vector<std::shared_ptr<Character>>>& board,const GridPoint & src_coordinates, const GridPoint & dst_coordinates) override;
+        Sniper(int health, int ammo, int range, int power, Team team) : Character(health, ammo, range, power, team,
+                                                                                  MOVEMENT_RANGE, AMMO_ON_RELOAD,
+                                                                                  AMMO_ATTACK_COST),
+                                                                        number_of_successful_hits(0) {}
+
+        bool isAttackInRange(const GridPoint &src_coordinates, const GridPoint &dst_coordinates) override;
+
+//        void attack(const std::vector<std::vector<std::shared_ptr<Character>>> &board, const GridPoint &src_coordinates,
+//                    const GridPoint &dst_coordinates) override;
     };
 }
 #endif //SNIPER_H

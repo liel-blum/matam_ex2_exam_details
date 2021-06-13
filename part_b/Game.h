@@ -4,6 +4,7 @@
 #include <memory>
 #include <iostream>
 #include <vector>
+#include <map>
 #include "Character.h"
 #include "Sniper.h"
 #include "Soldier.h"
@@ -19,7 +20,7 @@ namespace mtm {
         void isLegalCell(const GridPoint& coordinates);
         void isCellOccupied(const GridPoint& coordinates);
         void isCellEmpty(const GridPoint& coordinates);
-
+        map<Team, int> team_players_count;
     public:
         Game(int height, int width);
         Game(const Game& other);
@@ -32,6 +33,7 @@ namespace mtm {
         void attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates);
         void reload(const GridPoint & coordinates);
         bool isOver(Team* winningTeam=NULL) const;
+        friend ostream &operator<<(ostream &os, const Game &game);
     };
 }
 
