@@ -45,25 +45,33 @@ namespace mtm {
                                                 ammo_attack_cost(character.ammo_attack_cost), cross_fitters_sign
                                                 (character.cross_fitters_sign), power_lifters_sign(character.power_lifters_sign) {};
 
-        virtual ~Character() = 0;
+        virtual ~Character(){};
 
-        virtual void
-        attack(const std::vector<std::vector<std::shared_ptr<Character>>> &board, const GridPoint &src_coordinates,
-               const GridPoint &dst_coordinates) = 0;
+        virtual Character* clone() const = 0;
 
-        virtual bool isAttackInRange(const GridPoint &src_coordinates, const GridPoint &dst_coordinates) = 0;
+        virtual std::vector<std::shared_ptr<GridPoint>>
+        getAttackTargets(const GridPoint &dst_coordinates);
 
-        virtual void getAttacked() = 0;
+        virtual bool isLegalTarget(const GridPoint &src_coordinates, const GridPoint &dst_coordinates,
+                                   std::shared_ptr<Character> target) = 0;
+
+        void getAttacked(int attack_damage) ;
 
         bool isValidMove(int distance);
+
+        bool isDead();
+
+        virtual bool isAttackInRange(int distance);
+
+        virtual void attack(std::shared_ptr<Character> target, bool is_main_target) =0;
+
+        bool checkEnoughAmmo();
 
         Team getTeam();
 
         char getCharacterSign();
 
         void reloadAmmo();
-
-        void updateHealthAfterAttack(int health_points_to_remove);
     };
 }
 

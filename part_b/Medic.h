@@ -17,6 +17,7 @@ namespace mtm {
         static const char CROSSFITTERS_SIGN = 'm';
         static const char POWER_LIFTERS_SIGN = 'M';
     public:
+        ~Medic() override = default;
         Medic(int health, int ammo, int range, int power, Team team) : Character(health, ammo, range, power, team,
                                                                                  MOVEMENT_RANGE, AMMO_ON_RELOAD,
                                                                                  AMMO_ATTACK_COST,
@@ -24,9 +25,14 @@ namespace mtm {
                                                                                  POWER_LIFTERS_SIGN) {
         }
 
-        bool isAttackInRange(const GridPoint &src_coordinates, const GridPoint &dst_coordinates) override;
+        bool isLegalTarget(const GridPoint &src_coordinates, const GridPoint &dst_coordinates,
+                           std::shared_ptr<Character> target) override;
 
-//        void attack(const std::vector<std::vector<std::shared_ptr<Character>>> &board, const GridPoint &src_coordinates,
+        void attack(std::shared_ptr<Character> target, bool is_main_target) override;
+
+        Character* clone() const override;
+
+//        void getAttackTargets(const std::vector<std::vector<std::shared_ptr<Character>>> &board, const GridPoint &src_coordinates,
 //                    const GridPoint &dst_coordinates) override;
     };
 }

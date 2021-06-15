@@ -15,18 +15,26 @@ namespace mtm {
         static const int AMMO_ATTACK_COST = 1;
         static const char CROSSFITTERS_SIGN = 'n';
         static const char POWER_LIFTERS_SIGN = 'N';
+        static const int MIN_ATTACK_RANGE_FACTOR = 2;
+        static const int SUCCESSFUL_HITS_FOR_DOUBLE = 3;
+        static const int DOUBLE_ATTACK = 2;
         int number_of_successful_hits;
     public:
+        ~Sniper() override =default;
         Sniper(int health, int ammo, int range, int power, Team team) : Character(health, ammo, range, power, team,
                                                                                   MOVEMENT_RANGE, AMMO_ON_RELOAD,
                                                                                   AMMO_ATTACK_COST,
                                                                                   CROSSFITTERS_SIGN, POWER_LIFTERS_SIGN),
                                                                         number_of_successful_hits(0) {}
 
-        bool isAttackInRange(const GridPoint &src_coordinates, const GridPoint &dst_coordinates) override;
+        bool isLegalTarget(const GridPoint &src_coordinates, const GridPoint &dst_coordinates,
+                           std::shared_ptr<Character> target) override;
 
-//        void attack(const std::vector<std::vector<std::shared_ptr<Character>>> &board, const GridPoint &src_coordinates,
-//                    const GridPoint &dst_coordinates) override;
+        bool isAttackInRange(int distance) override;
+
+        void attack(std::shared_ptr<Character> target, bool is_main_target) override;
+
+        Character* clone() const override;
     };
 }
 #endif //SNIPER_H

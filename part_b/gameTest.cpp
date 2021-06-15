@@ -53,7 +53,7 @@ void example1() {
     std::cout << g1 << std::endl;
 
     try {
-        g1.attack(GridPoint(3,2), GridPoint(4,2)); // sniper can't attack close targets
+        g1.attack(GridPoint(3,2), GridPoint(4,2)); // sniper can't getAttackTargets close targets
     } catch (mtm::OutOfRange& e) {
         std::cout << e.what() << std::endl;
     }
@@ -97,7 +97,7 @@ void example1() {
 
     try {
         g1.move(GridPoint(6,4), GridPoint(6,1)); // medic was killed and removed
-        // the kill was possible because of the sniper double power third attack
+        // the kill was possible because of the sniper double power third getAttackTargets
     } catch (mtm::CellEmpty& e) {
         std::cout << e.what() << std::endl;
     }
@@ -173,6 +173,7 @@ void example2() {
     g1.attack(GridPoint(3,3), GridPoint(3,6));
     std::cout << g1 << std::endl;
 
+
     g1.attack(GridPoint(4,6), GridPoint(2,6)); // medic heals sniper
     try {
         g1.attack(GridPoint(4,6), GridPoint(4,6)); // medic can't heal self
@@ -189,6 +190,9 @@ void example2() {
     g1.reload(GridPoint(3,3)); // now soldier has ammo
     g1.reload(GridPoint(3,3)); // can reload twice - no problem (more ammo)
 
+
+    std::cout << "OUT TEST BEFORE" << std::endl;
+    std::cout << g1 << std::endl;
     g1.attack(GridPoint(3,3), GridPoint(3,6)); // medic dead, sniper not dead
     std::cout << g1 << std::endl;
 }

@@ -2,24 +2,35 @@
 #include "Sniper.h"
 #include <cmath>
 
-namespace mtm{
-    bool Sniper::isAttackInRange(const GridPoint & src_coordinates, const GridPoint & dst_coordinates){
-        int distance = GridPoint::distance(src_coordinates,dst_coordinates);
-        if(distance>range || distance<ceil(static_cast<double>(range)/2)){
+namespace mtm {
+    bool Sniper::isLegalTarget(const GridPoint &src_coordinates, const GridPoint &dst_coordinates,
+                               std::shared_ptr<Character> target) {
+        if (!target || target->getTeam() == this->team) {
             return false;
         }
         return true;
     }
 
-
-
-    /*void Sniper::attack(const std::vector<std::vector<std::shared_ptr<Character>>>& board,const GridPoint & src_coordinates, const GridPoint & dst_coordinates) {
-        std::shared_ptr<Character> victim = board.at(dst_coordinates.row).at(dst_coordinates.col);
-        if(victim->getTeam()==this->team){
-            return;
+    bool Sniper::isAttackInRange(int distance) {
+        if (distance > range || distance < ceil(static_cast<double>(range) / MIN_ATTACK_RANGE_FACTOR)) {
+            return false;
         }
-        else{
+        return true;
+    }
 
+    void Sniper::attack(std::shared_ptr<Character> target, bool is_main_target) {
+        if(is_main_target){
+            int damage=this->power;
+            this->number_of_successful_hits ++;
+            if(this->number_of_successful_hits%SUCCESSFUL_HITS_FOR_DOUBLE==0){
+                damage*=DOUBLE_ATTACK;
+            }
+            target->getAttacked(-1*damage);
+            this->ammo-=AMMO_ATTACK_COST;
         }
-    }*/
+    }
+    Character* Sniper::clone() const {
+        return new Sniper(*this);
+    }
+
 }

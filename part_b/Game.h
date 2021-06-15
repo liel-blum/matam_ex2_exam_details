@@ -14,18 +14,20 @@
 namespace mtm {
     class Game{
     private:
-        const int height;
-        const int width;
+        int height;
+        int width;
+        const char EMPTY_CELL = ' ';
         std::vector<std::vector<std::shared_ptr<Character>>> board;
-        void isLegalCell(const GridPoint& coordinates);
+        bool isLegalCell(const GridPoint& coordinates) const;
         void isCellOccupied(const GridPoint& coordinates);
         void isCellEmpty(const GridPoint& coordinates);
         std::map<Team, int> team_players_count;
     public:
         Game(int height, int width);
+        void copyGame(const Game& other);
         Game(const Game& other);
         Game& operator=(const Game& other);
-        ~Game();
+        ~Game()= default;
         void addCharacter(const GridPoint& coordinates, std::shared_ptr<Character> character);
         static std::shared_ptr<Character> makeCharacter(CharacterType type, Team team,
                                                         units_t health, units_t ammo, units_t range, units_t power);
