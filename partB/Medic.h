@@ -6,7 +6,7 @@
 #define MEDIC_H
 
 #include "Character.h"
-#include "../part_B_provided/Auxiliaries.h"
+#include "Auxiliaries.h"
 
 
 namespace mtm {

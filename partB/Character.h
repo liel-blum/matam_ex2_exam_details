@@ -5,7 +5,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "../part_B_provided/Auxiliaries.h"
+#include "Auxiliaries.h"
 #include <vector>
 #include <memory>
 

@@ -2,8 +2,8 @@
 
 #include <cassert>
 
-#include "../partB/Exceptions.h"
-#include "../partB/Game.h"
+#include "Exceptions.h"
+#include "Game.h"
 
 using namespace mtm;
 

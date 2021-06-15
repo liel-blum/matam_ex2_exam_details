@@ -9,7 +9,7 @@
 #include "Sniper.h"
 #include "Soldier.h"
 #include "Medic.h"
-#include "../part_B_provided/Auxiliaries.h"
+#include "Auxiliaries.h"
 
 namespace mtm {
     class Game{
