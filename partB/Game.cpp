@@ -68,9 +68,7 @@ namespace mtm {
             //todo maybe move this to a function
             throw MoveTooFar();
         }
-        if(GridPoint::distance(dst_coordinates,src_coordinates)!=0) {
-            isCellOccupied(dst_coordinates);
-        }
+        isCellOccupied(dst_coordinates);
         board[src_coordinates.row][src_coordinates.col] = nullptr;
         board[dst_coordinates.row][dst_coordinates.col] = character_to_move;
     }
