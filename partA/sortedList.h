@@ -29,7 +29,7 @@ namespace mtm {
         Node* head;
         int size;
         void clearList();
-        static void copyList(const SortedList<T>& src_list, SortedList<T>& dst_list);
+        void copyList(const SortedList<T>& sorted_list_to_copy);
         void insertNodeAtEnd(Node* last_node, Node* new_node);
         void insertNodeAtStart(Node* new_node);
         Node* getNodeByIndex (int index);
@@ -81,7 +81,7 @@ namespace mtm {
      */
     template <class T>
     SortedList<T>::SortedList(const SortedList<T>& sorted_list_to_copy):head(nullptr), size(sorted_list_to_copy.size){
-        copyList(sorted_list_to_copy, *this);
+        copyList(sorted_list_to_copy);
     }
 
     /**
@@ -114,23 +114,20 @@ namespace mtm {
     }
 
     template <class T>
-    /**
-     * copy existing list to a new one
-     * @param src_list list to copy from
-     * @param dst_list list to copy to
-     */
-    void SortedList<T>::copyList(const SortedList<T>& src_list, SortedList<T>& dst_list) {
-        if(!src_list.head){
+    void SortedList<T>::copyList(const SortedList<T>& sorted_list_to_copy) {
+        if(!sorted_list_to_copy.head){
             return;
         }
-        Node* head_ptr_to_copy = src_list.head;
-        dst_list.head=new Node(head_ptr_to_copy->data);
-        Node* current = dst_list.head;
+        Node* head_ptr_to_copy = sorted_list_to_copy.head;
+        this->head=new Node(head_ptr_to_copy->data);
+//        this->head->data=head_ptr_to_copy->data;
+        Node* current = this->head;
         head_ptr_to_copy=head_ptr_to_copy->next_node;
         while(head_ptr_to_copy)
         {
             current->next_node=new Node(head_ptr_to_copy->data);
             current=current->next_node;
+            current->data= head_ptr_to_copy->data;
             current->next_node= nullptr;
             head_ptr_to_copy=head_ptr_to_copy->next_node;
         }
@@ -144,11 +141,9 @@ namespace mtm {
         if(this == &sorted_list_to_assign){
             return *this;
         }
-        SortedList<T>* tmp_list= new SortedList<T>;
-        copyList(sorted_list_to_assign, *tmp_list);
-        this->clearList();
-        this->head = tmp_list->head;
+        clearList();
         this->size = sorted_list_to_assign.size;
+        copyList(sorted_list_to_assign);
         return *this;
     }
     /**
