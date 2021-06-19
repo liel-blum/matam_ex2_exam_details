@@ -18,9 +18,7 @@ namespace mtm {
         int width;
         std::vector<std::vector<std::shared_ptr<Character>>> board;
         std::map<Team, int> team_players_count;
-
-        //STATIC CONSTS
-        static const char EMPTY_CELL = ' ';
+        const char EMPTY_CELL = ' ';
 
         //PRIVATE FUNCTIONS
         /**Check if cell is in board*/
@@ -32,7 +30,7 @@ namespace mtm {
         /**Check if cell is empty,and throw exception accordingly*/
         void isCellEmpty(const GridPoint& coordinates);
         std::shared_ptr<Character> getCharacterByCoordinates(const GridPoint& coordinates); //todo add doc
-        std::map<Team, int> team_players_count;
+
     public:
         //C'TORS,D'TORS AND OPERATOR OVERLOADING
         /**
