@@ -6,9 +6,6 @@
 #include <cassert>
 
 
-
-//typedef int T;
-
 namespace mtm {
     template <class T>
     class SortedList{
@@ -120,14 +117,12 @@ namespace mtm {
         }
         Node* head_ptr_to_copy = sorted_list_to_copy.head;
         this->head=new Node(head_ptr_to_copy->data);
-//        this->head->data=head_ptr_to_copy->data;
         Node* current = this->head;
         head_ptr_to_copy=head_ptr_to_copy->next_node;
         while(head_ptr_to_copy)
         {
             current->next_node=new Node(head_ptr_to_copy->data);
             current=current->next_node;
-            current->data= head_ptr_to_copy->data;
             current->next_node= nullptr;
             head_ptr_to_copy=head_ptr_to_copy->next_node;
         }

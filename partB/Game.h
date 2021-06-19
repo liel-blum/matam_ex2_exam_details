@@ -29,7 +29,9 @@ namespace mtm {
 
         /**Check if cell is empty,and throw exception accordingly*/
         void isCellEmpty(const GridPoint& coordinates);
-        std::shared_ptr<Character> getCharacterByCoordinates(const GridPoint& coordinates); //todo add doc
+
+        /**gets shared_ptr to character by its coordinates on the board*/
+        std::shared_ptr<Character> getCharacterByCoordinates(const GridPoint& coordinates);
 
     public:
         //C'TORS,D'TORS AND OPERATOR OVERLOADING
