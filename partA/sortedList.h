@@ -13,16 +13,23 @@ namespace mtm {
     template <class T>
     class SortedList{
     private:
+        /**
+         * Inner class that is the structure of each element in the list
+         */
         class Node{
         public:
             T data;
             Node* next_node;
+            /**
+             * Node constructor
+             * @param val type T to initialize data of type T with, next_node is set to NULL
+             */
             explicit Node(const T val): data(val), next_node(nullptr) {};
         };
         Node* head;
         int size;
         void clearList();
-        void copyList(const SortedList<T>& sorted_list_to_copy);
+        static void copyList(const SortedList<T>& src_list, SortedList<T>& dst_list);
         void insertNodeAtEnd(Node* last_node, Node* new_node);
         void insertNodeAtStart(Node* new_node);
         Node* getNodeByIndex (int index);
@@ -44,6 +51,7 @@ namespace mtm {
 
     };
 
+    /** const_iterator class definition*/
     template <class T>
     class SortedList<T>::const_iterator{
         const SortedList<T>* list;
@@ -62,82 +70,23 @@ namespace mtm {
         const T* operator->() const;
     };
 
-
-    template <class T>
-    SortedList<T>::const_iterator::const_iterator(const SortedList<T>* list, int index) :
-            list(list),
-            index(index)
-    { }
-
-    template <class T>
-    const T& SortedList<T>::const_iterator::operator*() const {
-        if(index >= list->length()){
-            throw std::out_of_range ("");
-        }
-        assert(index >= 0);
-        Node* current = list->head;
-        for(int i=0; i<index; i++){
-            current= current->next_node;
-        }
-        return current->data;
-    }
-
-    template <class T>
-    typename SortedList<T>::const_iterator& SortedList<T>::const_iterator::operator++() {
-        ++index;
-        return *this;
-    }
-
-    template<class T>
-    typename SortedList<T>::const_iterator SortedList<T>::const_iterator::operator++(int) {
-        const_iterator result = *this;
-        ++*this;
-        return result;
-    }
-
-    template<class T>
-    bool SortedList<T>::const_iterator::operator==(const const_iterator& i) const {
-        assert(list == i.list);
-        return index == i.index;
-    }
-
-    template<class T>
-    bool SortedList<T>::const_iterator::operator!=(const const_iterator& i) const {
-        return !(*this == i);
-    }
-
-    template<class T>
-    const T* SortedList<T>::const_iterator::operator->() const {
-        if(index >= list->length()){
-            throw std::out_of_range ("");
-        }
-        assert(index >= 0 );
-        Node* current = list->head;
-        for(int i=0; i<index; i++){
-            current= current->next_node;
-        }
-
-        return &(current->data);
-    }
-
-    template<class T>
-    typename SortedList<T>::const_iterator SortedList<T>::begin() const {
-        return const_iterator(this, 0);
-    }
-
-    template<class T>
-    typename SortedList<T>::const_iterator SortedList<T>::end() const {
-        return const_iterator(this, size);
-    }
-
+    /**
+     * constructor for SortedList of type class T
+     */
     template <class T>
     SortedList<T>::SortedList():head(nullptr),size(0)
     {}
+    /**
+     * copy constructor for SortedList of type class T
+     */
     template <class T>
     SortedList<T>::SortedList(const SortedList<T>& sorted_list_to_copy):head(nullptr), size(sorted_list_to_copy.size){
-        copyList(sorted_list_to_copy);
+        copyList(sorted_list_to_copy, *this);
     }
 
+    /**
+     * empties list from all of its data
+     */
     template <class T>
     void SortedList<T>::clearList() {
         while(this->head){
@@ -145,13 +94,19 @@ namespace mtm {
             this->head = this->head->next_node;
             delete to_delete;
         }
+        this->size=0;
     }
 
+    /**
+     * insert new node to the end of SortedList
+     */
     template <class T>
     void SortedList<T>::insertNodeAtEnd(Node* last_node, Node* new_node) {
         last_node->next_node = new_node;
     }
-
+    /**
+     * insert new node to the start of SortedList
+     */
     template <class T>
     void SortedList<T>::insertNodeAtStart(Node* new_node) {
         new_node->next_node = this->head;
@@ -159,41 +114,55 @@ namespace mtm {
     }
 
     template <class T>
-    void SortedList<T>::copyList(const SortedList<T>& sorted_list_to_copy) {
-        if(!sorted_list_to_copy.head){
+    /**
+     * copy existing list to a new one
+     * @param src_list list to copy from
+     * @param dst_list list to copy to
+     */
+    void SortedList<T>::copyList(const SortedList<T>& src_list, SortedList<T>& dst_list) {
+        if(!src_list.head){
             return;
         }
-        Node* head_ptr_to_copy = sorted_list_to_copy.head;
-        this->head=new Node(head_ptr_to_copy->data);
-//        this->head->data=head_ptr_to_copy->data;
-        Node* current = this->head;
+        Node* head_ptr_to_copy = src_list.head;
+        dst_list.head=new Node(head_ptr_to_copy->data);
+        Node* current = dst_list.head;
         head_ptr_to_copy=head_ptr_to_copy->next_node;
         while(head_ptr_to_copy)
         {
-            //todo: should we check for allocation failures
             current->next_node=new Node(head_ptr_to_copy->data);
             current=current->next_node;
-            current->data= head_ptr_to_copy->data;
             current->next_node= nullptr;
             head_ptr_to_copy=head_ptr_to_copy->next_node;
         }
     }
+    /**
+     * assignment operator for sorted list of type class T
+     */
     template <class T>
     SortedList<T>& SortedList<T>::operator=(const SortedList<T>& sorted_list_to_assign){
 
         if(this == &sorted_list_to_assign){
             return *this;
         }
-        clearList();
+        SortedList<T>* tmp_list= new SortedList<T>;
+        copyList(sorted_list_to_assign, *tmp_list);
+        this->clearList();
+        this->head = tmp_list->head;
         this->size = sorted_list_to_assign.size;
-        copyList(sorted_list_to_assign);
         return *this;
     }
+    /**
+     * destructor for sorted list of type class T
+     */
     template <class T>
     SortedList<T>::~SortedList(){
         clearList();
     }
 
+    /**
+     * insert to a sorted list while maintaining its order
+     * @param element type T to insert to the list
+     */
     template <class T>
     void SortedList<T>::insert(const T& element){
         Node* new_node = new Node(element);
@@ -221,11 +190,20 @@ namespace mtm {
         insertNodeAtEnd(previous, new_node);
     }
 
+    /**
+     * gets sorted list length
+     * @return int
+     */
     template <class T>
     const int SortedList<T>:: length() const{
         return this->size;
     }
 
+    /**
+     * gets node from a sorted list by its index
+     * @param index int to represent position
+     * @return node pointer object
+     */
     template <class T>
     typename SortedList<T>::Node* SortedList<T>::getNodeByIndex (int index){
         if(index<0 || index>=size){
@@ -238,7 +216,10 @@ namespace mtm {
         return current;
     }
 
-
+    /**
+     * remove element from a sorted list using sorted list's iterator
+     * @param iterator sorted list iterator
+     */
     template <class T>
     void SortedList<T>::remove(const SortedList::const_iterator iterator ){
         if(this != iterator.list){
@@ -258,6 +239,11 @@ namespace mtm {
         this->size--;
     }
 
+    /**
+     * returns new sorted list based from a given sorted list on a predicate
+     * @param condition predicate to filter sortedList by
+     * @return SortedList of type T
+     */
     template <class T>
     template<class Condition>
     SortedList<T> SortedList<T>::filter(Condition condition) const{
@@ -270,6 +256,11 @@ namespace mtm {
         return result;
     }
 
+    /**
+     * Applies a function on all of the elements inside a sorted list
+     * @param applicator function to apply on the sorted list
+     * @return SortedList of type T
+     */
     template <class T>
     template<class Applicator>
     SortedList<T> SortedList<T>::apply(Applicator applicator) const{
@@ -280,6 +271,99 @@ namespace mtm {
             }
         }
         return result;
+    }
+
+    /** const_iterator implementation*/
+
+    /**
+     * constructor for iterator on a sorted list
+     */
+    template <class T>
+    SortedList<T>::const_iterator::const_iterator(const SortedList<T>* list, int index) :
+            list(list),
+            index(index)
+    { }
+
+    /** de-referencing operator for const_iterator of SortedList of type T*/
+    template <class T>
+    const T& SortedList<T>::const_iterator::operator*() const {
+        if(index >= list->length()){
+            throw std::out_of_range ("");
+        }
+        assert(index >= 0);
+        Node* current = list->head;
+        for(int i=0; i<index; i++){
+            current= current->next_node;
+        }
+        return current->data;
+    }
+
+    /**  pre-fix operator for const_iterator of SortedList of type T*/
+    template <class T>
+    typename SortedList<T>::const_iterator& SortedList<T>::const_iterator::operator++() {
+        ++index;
+        return *this;
+    }
+
+    /**  post-fix operator for const_iterator of SortedList of type T*/
+    template<class T>
+    typename SortedList<T>::const_iterator SortedList<T>::const_iterator::operator++(int) {
+        const_iterator result = *this;
+        ++*this;
+        return result;
+    }
+
+    /**
+     * operator == on two iterators based on their index, throws assertion error when iterators are of different
+     * SortedLists
+     * @param i const_iterator to compare with
+     * @return bool
+     */
+    template<class T>
+    bool SortedList<T>::const_iterator::operator==(const const_iterator& i) const {
+        assert(list == i.list);
+        return index == i.index;
+    }
+
+    /**
+     * Checks if two iterators don't point to the same SortedList element
+     * @param i const_iterator to compare with
+     * @return bool
+     */
+    template<class T>
+    bool SortedList<T>::const_iterator::operator!=(const const_iterator& i) const {
+        return !(*this == i);
+    }
+
+    /** -> operator for const_iterator of SortedList*/
+    template<class T>
+    const T* SortedList<T>::const_iterator::operator->() const {
+        if(index >= list->length()){
+            throw std::out_of_range ("");
+        }
+        assert(index >= 0 );
+        Node* current = list->head;
+        for(int i=0; i<index; i++){
+            current= current->next_node;
+        }
+
+        return &(current->data);
+    }
+
+    /**
+     * returns const_iterator for the SortedList's head
+     */
+    template<class T>
+    typename SortedList<T>::const_iterator SortedList<T>::begin() const {
+        return const_iterator(this, 0);
+    }
+
+    /**
+     * returns const_iterator for the SortedList's end
+     */
+    template<class T>
+    typename SortedList<T>::const_iterator SortedList<T>::end() const {
+        return const_iterator(this, size);
     }
 }
 #endif //SORTEDLIST_H

@@ -21,6 +21,7 @@ namespace mtm {
         bool isLegalCell(const GridPoint& coordinates) const;
         void isCellOccupied(const GridPoint& coordinates);
         void isCellEmpty(const GridPoint& coordinates);
+        std::shared_ptr<Character> getCharacterByCoordinates(const GridPoint& coordinates); //todo add doc
         std::map<Team, int> team_players_count;
     public:
         Game(int height, int width);

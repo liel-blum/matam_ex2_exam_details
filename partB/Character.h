@@ -21,7 +21,6 @@ namespace mtm {
         const int ammo_on_reload;
         const int ammo_attack_cost;
         const char cross_fitters_sign;
-        const char power_lifters_sign;
     public:
         Character(int health, int ammo, int range, int power, Team team, int movement_range, int ammo_on_reload,
                   int ammo_attack_cost, char cross_fitters_sign, char power_lifters_sign) : health(health), ammo(ammo),

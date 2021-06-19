@@ -1,5 +1,6 @@
 #include <iostream>
 #include "examDetails.h"
+#include <cmath>
 using std::string;
 using std::ostream;
 using std::cout;
@@ -13,7 +14,9 @@ namespace mtm {
             this->day > max_day_of_month) {
             throw InvalidDateException(day, month);
         }
-        if (this->hour - int(this->hour) != 0.5 && this->hour - int(this->hour) != 0) {
+        double hour_part, minutes_part;
+        minutes_part = modf(hour, &hour_part);
+        if ((minutes_part != 0.5 && minutes_part != 0) || hour_part<min_hour|| hour_part>max_hour) {
             throw InvalidTimeException(hour);
         }
         if (course_number < 0) {

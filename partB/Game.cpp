@@ -8,10 +8,16 @@
 
 namespace mtm {
     Game::Game(int height, int width) : height(height), width(width) {
+        if(height <=0 || width <=0){
+            throw IllegalArgument();
+        }
         board.resize(height, std::vector<std::shared_ptr<Character>>(width, nullptr));
         team_players_count[CROSSFITTERS] = 0;
         team_players_count[POWERLIFTERS] = 0;
-        //todo: ADD EXCEPTION HANDLING
+    }
+
+    std::shared_ptr<Character> Game::getCharacterByCoordinates(const GridPoint& coordinates){
+        return board.at(coordinates.row).at(coordinates.col);
     }
 
     bool Game::isLegalCell(const GridPoint &coordinates) const {
@@ -22,13 +28,13 @@ namespace mtm {
     }
 
     void Game::isCellOccupied(const GridPoint &coordinates) {
-        if (board.at(coordinates.row).at(coordinates.col)) {
+        if (getCharacterByCoordinates(coordinates)) {
             throw CellOccupied();
         }
     }
 
     void Game::isCellEmpty(const GridPoint &coordinates) {
-        if (!board.at(coordinates.row).at(coordinates.col)) {
+        if (!getCharacterByCoordinates(coordinates)) {
             throw CellEmpty();
         }
     }
@@ -63,7 +69,7 @@ namespace mtm {
             throw IllegalCell();
         }
         isCellEmpty(src_coordinates);
-        std::shared_ptr<Character> character_to_move = board.at(src_coordinates.row).at(src_coordinates.col);
+        std::shared_ptr<Character> character_to_move = getCharacterByCoordinates(src_coordinates);
         if (!character_to_move->isValidMove(GridPoint::distance(src_coordinates, dst_coordinates))) {
             //todo maybe move this to a function
             throw MoveTooFar();
@@ -78,7 +84,7 @@ namespace mtm {
             throw IllegalCell();
         }
         isCellEmpty(coordinates);
-        std::shared_ptr<Character> character_to_reload = board.at(coordinates.row).at(coordinates.col);
+        std::shared_ptr<Character> character_to_reload = getCharacterByCoordinates(coordinates);
         character_to_reload->reloadAmmo();
     }
 
@@ -87,8 +93,8 @@ namespace mtm {
             throw IllegalCell();
         }
         isCellEmpty(src_coordinates);
-        std::shared_ptr<Character> attacker = board.at(src_coordinates.row).at(src_coordinates.col);
-        std::shared_ptr<Character> target = board.at(dst_coordinates.row).at(dst_coordinates.col);
+        std::shared_ptr<Character> attacker = getCharacterByCoordinates(src_coordinates);
+        std::shared_ptr<Character> target = getCharacterByCoordinates(dst_coordinates);
         if (!attacker->isAttackInRange(GridPoint::distance(src_coordinates, dst_coordinates))) {
             throw OutOfRange();
         }
@@ -101,7 +107,7 @@ namespace mtm {
         std::vector<std::shared_ptr<GridPoint>> attack_targets = attacker->getAttackTargets(dst_coordinates);
         for (const std::shared_ptr<GridPoint> &point: attack_targets) {
             if (isLegalCell(*point)) {
-                std::shared_ptr<Character> current_target = board.at(point->row).at(point->col); //todo add function
+                std::shared_ptr<Character> current_target = getCharacterByCoordinates(*point);
                 attacker->attack(current_target, *point == dst_coordinates);
                 if (current_target && current_target->isDead()) {
                     board[point->row][point->col] = nullptr;
@@ -145,7 +151,7 @@ namespace mtm {
         board.resize(height, std::vector<std::shared_ptr<Character>>(width, nullptr));
         for (int row = 0; row < height; ++row) {
             for (int col = 0; col < width; ++col) {
-                if(other.board.at(row).at(col)) {
+                if(getCharacterByCoordinates(GridPoint(row,col))) {
                     std::shared_ptr<Character> new_character(other.board[row][col]->clone());
                     board.at(row).at(col) = new_character;
                 }
