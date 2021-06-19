@@ -133,6 +133,7 @@ void example2() {
     std::cout << g1 << std::endl; // has not changed
 
     Game g2 = g1; // copy constructor - games should be independent
+    std::cout<<"OUR TEST"<< std::endl;
 
     g1.move(GridPoint(3,0), GridPoint(3,3));
 

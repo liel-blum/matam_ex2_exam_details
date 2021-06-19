@@ -151,7 +151,7 @@ namespace mtm {
         board.resize(height, std::vector<std::shared_ptr<Character>>(width, nullptr));
         for (int row = 0; row < height; ++row) {
             for (int col = 0; col < width; ++col) {
-                if(getCharacterByCoordinates(GridPoint(row,col))) {
+                if(other.board.at(row).at(col)) {
                     std::shared_ptr<Character> new_character(other.board[row][col]->clone());
                     board.at(row).at(col) = new_character;
                 }
