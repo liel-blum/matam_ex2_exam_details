@@ -6,7 +6,6 @@
 #define MEDIC_H
 
 #include "Character.h"
-#include "../Auxiliaries.h"
 
 
 namespace mtm {
@@ -31,9 +30,6 @@ namespace mtm {
         void attack(std::shared_ptr<Character> target, bool is_main_target) override;
 
         Character* clone() const override;
-
-//        void getAttackTargets(const std::vector<std::vector<std::shared_ptr<Character>>> &board, const GridPoint &src_coordinates,
-//                    const GridPoint &dst_coordinates) override;
     };
 }
 #endif //MEDIC_H
