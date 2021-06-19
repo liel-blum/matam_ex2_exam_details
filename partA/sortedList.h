@@ -212,21 +212,18 @@ namespace mtm {
      */
     template <class T>
     void SortedList<T>::remove(const SortedList::const_iterator iterator ){
-        if(this != iterator.list){
-            //todo:check if exception needed
+        assert(this == iterator.list);
+        Node* node_to_delete=getNodeByIndex(iterator.index);
+        if(iterator.index==0){
+            this->head=this->head->next_node;
         }
         else{
-            Node* node_to_delete=getNodeByIndex(iterator.index);
-            if(iterator.index==0){
-                this->head=this->head->next_node;
-            }
-            else{
-                Node* previous_node = getNodeByIndex(iterator.index-1);
-                previous_node->next_node=node_to_delete->next_node;
-            }
-            delete node_to_delete;
+            Node* previous_node = getNodeByIndex(iterator.index-1);
+            previous_node->next_node=node_to_delete->next_node;
         }
+        delete node_to_delete;
         this->size--;
+
     }
 
     /**

@@ -71,7 +71,6 @@ namespace mtm {
         isCellEmpty(src_coordinates);
         std::shared_ptr<Character> character_to_move = getCharacterByCoordinates(src_coordinates);
         if (!character_to_move->isValidMove(GridPoint::distance(src_coordinates, dst_coordinates))) {
-            //todo maybe move this to a function
             throw MoveTooFar();
         }
         isCellOccupied(dst_coordinates);
