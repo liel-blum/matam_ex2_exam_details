@@ -11,8 +11,8 @@ namespace mtm {
         int course_number;
         int month;
         int day;
-        int duration;
         double hour;
+        int duration;
         string link_to_test;
         static const int max_day_of_month = 30;
         static const int min_day_of_month = 1;
