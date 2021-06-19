@@ -5,12 +5,10 @@ using std::ostream;
 using std::cout;
 using std::endl;
 
-using namespace mtm;
-
 namespace mtm {
-    ExamDetails::ExamDetails(int course_number, int month, int day, int duration, double hour, const string
+    ExamDetails::ExamDetails(int course_number, int month, int day, double hour, int duration, const string
     &link_to_test)
-    :course_number(course_number), month(month), day(day),duration(duration), hour(hour),link_to_test(link_to_test) {
+    :course_number(course_number), month(month), day(day), hour(hour), duration(duration),link_to_test(link_to_test) {
         if (this->month < min_month || this->month > max_month || this->day < min_day_of_month ||
             this->day > max_day_of_month) {
             throw InvalidDateException(day, month);
@@ -25,8 +23,8 @@ namespace mtm {
 
     ExamDetails::ExamDetails(const ExamDetails &exam_details) :
             course_number(exam_details.course_number), month(exam_details.month),
-            day(exam_details.day),duration(exam_details.duration),
-             hour(exam_details.hour), link_to_test(string(exam_details.link_to_test)) {
+            day(exam_details.day), hour(exam_details.hour), duration(exam_details.duration),
+             link_to_test(string(exam_details.link_to_test)) {
     }
 
     string ExamDetails::getLink() const {
