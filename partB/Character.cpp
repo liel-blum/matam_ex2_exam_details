@@ -37,7 +37,7 @@ namespace mtm{
     }
 
     char Character::getCharacterSign(){
-        return this->team==POWERLIFTERS? this->power_lifters_sign: cross_fitters_sign;
+        return this->sign;
     }
 
     std::vector<std::shared_ptr<GridPoint>> Character::getAttackTargets(const GridPoint &dst_coordinates) {
