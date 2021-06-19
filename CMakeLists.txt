@@ -12,7 +12,7 @@ set(CMAKE_CPP_FLAGS ${MTM_FLAGS_DEBUG})
 
 
 #add_executable(sortedList.h main.cpp testClass.h examDetails.h examDetails.cpp)
-add_executable(sortedList.h part_a_test.cpp examDetails.cpp examDetails.h)
+add_executable(partA/sortedList.h part_a_test.cpp partA/examDetails.cpp partA/examDetails.h)
 
 
 #add_executable(Character partB/Character.h partB/Character.cpp partB/gameTest.cpp partB/Soldier.h partB/Soldier.cpp

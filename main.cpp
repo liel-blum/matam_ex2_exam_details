@@ -1,4 +1,4 @@
-#include "sortedList.h"
+#include "partA/sortedList.h"
 #include <assert.h>
 #include <iostream>
 #include "testClass.h"
