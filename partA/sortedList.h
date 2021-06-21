@@ -288,6 +288,9 @@ namespace mtm {
     /**  pre-fix operator for const_iterator of SortedList of type T*/
     template <class T>
     typename SortedList<T>::const_iterator& SortedList<T>::const_iterator::operator++() {
+        if(index+1>this->list->length()){
+            throw std::out_of_range("");
+        }
         ++index;
         return *this;
     }
